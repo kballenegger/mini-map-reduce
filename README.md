@@ -87,22 +87,14 @@ MiniMapReduce.process do
   # cars is an Array of the objects emitted above
   # this block is executed for each value of country
   reduce do |country, cars|
-    result = {
-      :score => 0,
-      :votes => 0,
-      :average_sum => 0,
-      :count => 0
-    }
 
-    averages_equalized
-    cars.each do |car|
-      result[:score] += car[:score]
-      result[:votes] += car[:votes]
-      result[:count] += car[:count]
-      result[:average_sum] += car[:average_sum]
+    cars.reduce do |a,b|; {
+        :score => a[:score] + b[:score],
+        :votes => a[:votes] + b[:votes],
+        :average_sum => a[:count] + b[:count],
+        :count => a[:average_sum] + b[:average_sum]
+      }
     end
-
-    result
   end
 
   # calculate the final averages and cleanup the output
