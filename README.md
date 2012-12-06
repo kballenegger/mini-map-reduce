@@ -52,7 +52,6 @@ MiniMapReduce.process do
     result
   end
 
-  # dump the results to disk
   dump {|id,r| puts "#{id} averages #{r[:average]}" }
 
 end
